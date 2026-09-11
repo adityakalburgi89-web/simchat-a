@@ -4,6 +4,18 @@ A REST-only backend service built in Java 17 and Spring Boot using Redis as the 
 
 ---
 
+## Postman Testing Screenshots
+
+![Create Room](image.png)
+![Duplicate Room Error](image-1.png)
+![Join Room](image-2.png)
+![Non Existent Room Error](image-3.png)
+![Send Message](image-4.png)
+![Get History](image-5.png)
+![Real Time SSE Stream](image-6.png)
+
+---
+
 ## Features & PRD Compliance
 
 1. **Create Chat Room** (`POST /api/chatapp/chatrooms`)
@@ -53,13 +65,3 @@ A complete Postman Collection is included: [`Simchat_Redis.postman_collection.js
 4. **Real-Time Stream**: Open `GET http://localhost:8080/api/chatapp/chatrooms/general/subscribe` in Postman or Browser (SSE).
 5. **Send Message**: `POST http://localhost:8080/api/chatapp/chatrooms/general/messages` with body `{"participant": "guest_user", "message": "Hello, everyone!"}`
 6. **Get History**: `GET http://localhost:8080/api/chatapp/chatrooms/general/messages?limit=10`
-
-
-
-![alt text](image.png)
-![alt text](image-1.png)
-![alt text](image-2.png)
-![alt text](image-3.png)
-![alt text](image-4.png)
-![alt text](image-5.png)
-![alt text](image-6.png)
