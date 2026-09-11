@@ -1,0 +1,276 @@
+{
+  "info": {
+    "_postman_id": "7b8e9f1a-2b3c-4d5e-6f7a-8b9c0d1e2f3a",
+    "name": "SIMCHAT Redis Chat API",
+    "description": "Postman Collection for Simple Chat Application Using Redis (Spring Boot)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Room Management",
+      "item": [
+        {
+          "name": "1.1 Create Chat Room (201 Created)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"roomName\": \"general\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/chatapp/chatrooms",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "chatapp", "chatrooms"]
+            }
+          }
+        },
+        {
+          "name": "1.2 Create Duplicate Room (409 Conflict)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"roomName\": \"general\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/chatapp/chatrooms",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "chatapp", "chatrooms"]
+            }
+          }
+        },
+        {
+          "name": "1.3 Create Blank Room Name (400 Bad Request)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"roomName\": \"\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/chatapp/chatrooms",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "chatapp", "chatrooms"]
+            }
+          }
+        },
+        {
+          "name": "1.4 Join Chat Room (200 OK)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"participant\": \"guest_user\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/chatapp/chatrooms/general/join",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "chatapp", "chatrooms", "general", "join"]
+            }
+          }
+        },
+        {
+          "name": "1.5 Join Non-Existent Room (404 Not Found)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"participant\": \"guest_user\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/chatapp/chatrooms/unknown_room/join",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "chatapp", "chatrooms", "unknown_room", "join"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Messaging",
+      "item": [
+        {
+          "name": "2.1 Send Message (201 Created)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"participant\": \"guest_user\",\n  \"message\": \"Hello, everyone!\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/chatapp/chatrooms/general/messages",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "chatapp", "chatrooms", "general", "messages"]
+            }
+          }
+        },
+        {
+          "name": "2.2 Send Second Message",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"participant\": \"another_user\",\n  \"message\": \"Hi, guest_user!\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/chatapp/chatrooms/general/messages",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "chatapp", "chatrooms", "general", "messages"]
+            }
+          }
+        },
+        {
+          "name": "2.3 Send Message to Non-Existent Room (404 Not Found)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"participant\": \"guest_user\",\n  \"message\": \"Hello?\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/chatapp/chatrooms/unknown_room/messages",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "chatapp", "chatrooms", "unknown_room", "messages"]
+            }
+          }
+        },
+        {
+          "name": "2.4 Retrieve History (Default Limit)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/chatapp/chatrooms/general/messages",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "chatapp", "chatrooms", "general", "messages"]
+            }
+          }
+        },
+        {
+          "name": "2.5 Retrieve History (Limit = 1)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/chatapp/chatrooms/general/messages?limit=1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "chatapp", "chatrooms", "general", "messages"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "1"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Real-Time & Deletion",
+      "item": [
+        {
+          "name": "3.1 Real-Time Subscribe (SSE)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/chatapp/chatrooms/general/subscribe",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "chatapp", "chatrooms", "general", "subscribe"]
+            }
+          }
+        },
+        {
+          "name": "3.2 Delete Chat Room (200 OK)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/chatapp/chatrooms/general",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "chatapp", "chatrooms", "general"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
